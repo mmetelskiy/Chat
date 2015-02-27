@@ -1,0 +1,181 @@
+	div {
+		border: solid 1px;
+	}
+
+	body {
+		overflow-x: hidden;
+	}
+
+	#head {
+		position: fixed;
+		top: 0px;
+		left: calc(50% - 500px);
+
+		height: 75px;
+		width: 1000px;
+
+		background-color: #cc13ba;
+	}
+
+	#head .head-item {
+
+	}
+
+	#left {
+		position: fixed;
+		top: 75px;
+		left: calc(50% - 475px);
+
+		width: 250px;
+		height: 600px;
+	}
+
+	#server {
+		position: fixed;
+		left: calc(50% - 475px);
+		bottom: 0px;
+		width: 50px;
+		height: 50px;
+	}
+
+	#dialogs-head {
+		position: fixed;
+		top: 75px;
+		left: calc(50% - 225px);
+		width: 700px;
+		height: 50px;
+
+		background: linear-gradient(to bottom, blue 40%, transparent);
+	}
+
+	#bottom {
+		position: fixed;
+		left: calc(50% - 225px);
+		bottom: 0px;
+		width: 700px;
+		height: 135px;
+
+		background: #eee;
+	}
+
+	#bottom #img {
+		position: absolute;
+		left: 10px;
+		top: 10px;
+
+		height: 105px;
+		width: 105px;
+		float: left;
+	}
+
+	#img:hover {
+
+	}
+
+	#img img {
+		display: block;
+	}
+
+	#bottom textarea {
+		margin: 10px 10px -2px 125px;
+		width: calc(100% - 135px);
+		height: 105px;
+
+		padding: 0.2em;
+
+		z-index: 500;
+		resize: none;
+	}
+
+	#bottom #send-message-button {
+		margin-left: 575px;
+		width: 80px;
+		height: 20px;
+
+		position: relative;
+		z-index: 10;
+	}
+
+	#send-message-button:hover {
+		cursor: pointer;
+	}
+
+	#message-container {
+		margin-top: 125;
+		margin-left: calc(50% - 225px);
+		margin-bottom: 135px;
+		width: 700px;
+		overflow: hidden;
+
+		min-height: calc(100% - 247px);
+	}
+
+	#message-container > div {
+		position: relative;
+		margin: 10px 5px 10px 5px;
+		clear: both;
+		padding: 10px;
+		border-radius: 15px;
+
+		min-width: 400px;
+		max-width: 660px;
+		min-height: 2em;
+	}
+
+	#message-container > .my-message {
+		float: right;
+	}
+
+	.my-message > time {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		/*height: 100%;*/
+		margin-left: 20px;
+	}
+
+	.my-message > div {
+		margin-right: 100px;
+	}
+
+	#message-container > .friend-message {
+		float: left;
+	}
+
+	.friend-message > time {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		/*height: 100%;*/
+		margin-right: 20px;
+	}
+
+	.friend-message > div {
+		margin-left: 100px;
+	}
+
+
+	.modal-container {
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		z-index: 1000;
+
+		background: rgba(0,0,0,.7);
+
+		display: none;
+	}
+
+	.modal-container > #login-div {
+		position: fixed;
+		top: calc(50% - 200px);
+		left: calc(50% - 300px);
+		z-index: 1001;
+
+		background: #fefefe;
+
+		width: 600px;
+		height: 400px;
+	}
