@@ -9,25 +9,20 @@
 	<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
 </head>
 <body>
-
 <div class="modal-container">
 	<div id="login-div"></div>
 </div>
-
 	<div id="message-container"></div>
-
-	<div id="head"></div>
-
-	<div id="left"></div>
-
+	<div id="head">
+		<div id="icon"></div>
+	</div>
+	<div id="friends"></div>
 	<div id="server"></div>
-
 	<div id="dialogs-head"></div>
-
 	<div id="bottom">
 		<div id="img"></div>
 		<textarea id="textarea" placeholder="Enter your message"></textarea>
-		<div id="send-message-button"></div>
+		<div id="send-message-button">Send</div>
 	</div>
 
 <script type="text/javascript">
@@ -94,6 +89,17 @@
 	document.body.onkeypress = function(event) {
 		if(event.keyCode < 32) return;
 		textarea.focus();
+	};
+	messageContainer.onmousedown = function (event) {
+		function getMessage(target) {
+			return target.classList.contains("my-message") ? target : null;
+		}
+
+		var message = getMessage(event.target);
+		if(!message) return;
+
+		message.classList.toggle('selected-message');
+		// message.style.border = (message.style.borderWidth == "2px") ? "solid #d0d0d0 1px" : "solid #3D8AF7 2px";
 	};
 
 //---------------------------------------------------------
