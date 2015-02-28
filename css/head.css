@@ -1,0 +1,25 @@
+#head {
+	position: fixed;
+	top: 0px;
+	left: calc(50% - 500px);
+
+	height: 75px;
+	width: 1000px;
+
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+
+	background: linear-gradient(45deg, black, rgb(64,82,34), rgb(130,141,71));
+}
+
+#head > #icon {
+	background-image: url("../icon/MyChat-icon.png");
+	height: 65px;
+	width: 177px;
+	border-radius: 10px;
+	margin: 5px 20px 5px 55px;
+}
+
+#icon:hover {
+	cursor: pointer;
+}

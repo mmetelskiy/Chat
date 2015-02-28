@@ -5,12 +5,18 @@
 		Chat
 	</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<link rel="stylesheet" type="text/css" href="./css/head.css">
+	<link rel="stylesheet" type="text/css" href="./css/friends.css">
+	<link rel="stylesheet" type="text/css" href="./css/server.css">
+	<link rel="stylesheet" type="text/css" href="./css/dialogs-head.css">
+	<link rel="stylesheet" type="text/css" href="./css/bottom.css">
+	<link rel="stylesheet" type="text/css" href="./css/message-container.css">
+	<link rel="stylesheet" type="text/css" href="./css/modals.css">
 </head>
 <body>
 <div class="modal-container">
-	<div id="login-div"></div>
+	<div id="login"></div>
 </div>
 	<div id="message-container"></div>
 	<div id="head">
@@ -25,10 +31,12 @@
 		<div id="send-message-button">Send</div>
 	</div>
 
+<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
 <script type="text/javascript">
+
 	var textarea = document.getElementById("textarea");
 	var messageContainer = document.getElementById("message-container");
-	var sendOnEnter = true;
+	var sendOnEnter = false;
 
 	function ModalContainer() {
 		var div = document.createElement("div");
@@ -49,7 +57,11 @@
 		// if(!element)
 		// 	element = document.body;
 		// if(widthOfTextInElement(text, element) < 551)
-			return text;
+			return addLineDividers(text);
+	}
+
+	function addLineDividers(text) {
+		return text.replace( /^\s+|\s+$/g, '' ).replace(/\r?\n/g, '<br>');
 	}
 
 	function widthOfTextInElement(text, element) {
@@ -64,8 +76,7 @@
 		return width;
 	}
 
-	function drawMessage(textMessage, my)
-	{
+	function drawMessage(textMessage, my) {
 		var message = document.createElement("div");
 		message.className = my ? "my-message" : "friend-message";
 
@@ -87,6 +98,19 @@
 
 	document.getElementById("send-message-button").onclick = sendMessage;
 	document.body.onkeypress = function(event) {
+		if(event.keyCode == 13) {
+			if(sendOnEnter)
+				sendMessage();
+			else textarea.value += '\n';
+			return false;
+		}
+		else if(event.keyCode == 10) {
+			if(sendOnEnter)
+				textarea.value += '\n';
+			else sendMessage();
+			return false;
+		}
+
 		if(event.keyCode < 32) return;
 		textarea.focus();
 	};
@@ -96,10 +120,10 @@
 		}
 
 		var message = getMessage(event.target);
-		if(!message) return;
+		if(!message) return false;
 
 		message.classList.toggle('selected-message');
-		// message.style.border = (message.style.borderWidth == "2px") ? "solid #d0d0d0 1px" : "solid #3D8AF7 2px";
+		return false;
 	};
 
 //---------------------------------------------------------
@@ -109,7 +133,7 @@
 	messages.forEach(function(message) {
 		drawMessage(message, my);
 		my = my ? false: true;
-	})
+	});
 
 </script>
 
