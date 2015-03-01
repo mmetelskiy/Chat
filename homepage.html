@@ -18,10 +18,15 @@
 <body>
 <div id="modal-container">
 	<div id="modal-frame">
-		<div id="c"></div>
-		<div id="form">
-
+		<div id="carbon">
+			<div id="c12">12,011</div>
+			<div id="c6">6</div>
+			<div id="c2-4">2 -4</div>
+			<div id="c">C</div>
+			<div id="ul">-4<br>-3<br>-2<br>-1<br>+1<br>+2<br>+3<br>+4</div>
 		</div>
+		<div id="hat">hat</div>
+		<div id="form"></div>
 	</div>
 </div>
 
@@ -51,7 +56,7 @@
 	function showModal(formToShow) {
 		modalIsShown = true;
 		form.appendChild(formToShow);
-		modalSkeletone.style.display = "";
+		modalSkeletone.style.display = "block";
 	}
 
 	function hideModal () {

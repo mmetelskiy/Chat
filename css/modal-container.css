@@ -8,7 +8,7 @@
 
 	background: rgba(0,0,0,.9);
 
-	/*display: none;*/
+	display: none;
 }
 
 #modal-container > #modal-frame {
@@ -23,7 +23,7 @@
 	background: url("../icon/modal-background.jpg");
 }
 
-#modal-frame > #c {
+#modal-frame > #carbon {
 	position: absolute;
 	right: 400px;
 	bottom: 300px;
@@ -34,8 +34,56 @@
 	background: linear-gradient(to top left, black, #2a4d1e, rgb(84,167,108));
 }
 
-#modal-frame > #hat {
+#carbon > #c {
+	font-size: 200px;
+	color: white;
+	margin-left: 50px;
+}
 
+#carbon > #c12 {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	color: white;
+
+	font-size: 1.5em;
+}
+
+#carbon > #c2-4 {
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+	color: white;
+	font-size: 1.5em;
+}
+
+#carbon > #c6 {
+	position: absolute;
+	left: 10px;
+	bottom: 40px;
+	color: white;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+#carbon > #ul {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: white;
+	font-size: 1.5em;
+}
+
+#modal-frame > #hat {
+	position: absolute;
+	bottom: 300px;
+	left: 400px;
+
+	padding: 0 0 15px 20px;
+
+	font-size: 200px;
+	color: white;
+	/*font-family: trebuchet ms;*/
 }
 
 #modal-frame > #form {
