@@ -8,6 +8,8 @@
 	min-height: calc(100% - 247px);
 	border-left: solid #D9E0E7 1px;
 	border-right: solid #D9E0E7 1px;
+	
+	-webkit-user-select: text;
 }
 
 
@@ -46,7 +48,8 @@
 }
 
 #message-container > .selected-message {
-	border: solid rgb(64,82,34) 2px;
+	border: solid rgb(64,82,34) 1px;
+	box-shadow: 0 0 2px rgb(64,82,34);
 }
 
 .my-message > time {

@@ -12,12 +12,19 @@
 	<link rel="stylesheet" type="text/css" href="./css/dialogs-head.css">
 	<link rel="stylesheet" type="text/css" href="./css/bottom.css">
 	<link rel="stylesheet" type="text/css" href="./css/message-container.css">
-	<link rel="stylesheet" type="text/css" href="./css/modals.css">
+	<link rel="stylesheet" type="text/css" href="./css/modal-container.css">
+	<link rel="stylesheet" type="text/css" href="./css/login-form.css">
 </head>
 <body>
-<div class="modal-container">
-	<div id="login"></div>
+<div id="modal-container">
+	<div id="modal-frame">
+		<div id="c"></div>
+		<div id="form">
+
+		</div>
+	</div>
 </div>
+
 	<div id="message-container"></div>
 	<div id="head">
 		<div id="icon"></div>
@@ -36,18 +43,91 @@
 
 	var textarea = document.getElementById("textarea");
 	var messageContainer = document.getElementById("message-container");
+	var modalSkeletone = document.getElementById("modal-container");
+	var form = document.getElementById("form");
 	var sendOnEnter = false;
+	var modalIsShown = true;
 
-	function ModalContainer() {
-		var div = document.createElement("div");
-		div.className = "modal-container";
-		return div;
+	function showModal(formToShow) {
+		modalIsShown = true;
+		form.appendChild(formToShow);
+		modalSkeletone.style.display = "";
+	}
+
+	function hideModal () {
+		modalIsShown = false;
+		while(form.firstChild)
+			form.removeChild(form.firstChild);
+		modalSkeletone.style.display = "none";
+	}
+
+/*
+<div id="login-form">
+	<form>
+		<span>Username:</span>
+		<input type="text" id="username">
+		<span>Password:</span>
+		<input type="password" id="password">
+		<button id="enter">Enter</button>
+		<button id="register">Register</button>
+	</form>
+</div>
+*/
+	function LoginForm() {
+		var textUsername = document.createElement("span");
+		textUsername.innerText = "Username:";
+
+		var inputUsername = document.createElement("input");
+		inputUsername.type = "text";
+		inputUsername.id = "username";
+
+		var textPassword = document.createElement("span");
+		textPassword.innerText = "Password";
+
+		var inputPassword = document.createElement("input");
+		inputPassword.type = "password";
+		inputPassword.id = "password";
+
+		var buttonEnter = document.createElement("button");
+		buttonEnter.id = "enter";
+		buttonEnter.innerText = "Enter";
+		buttonEnter.onclick = enter;
+
+		var buttonRegister = document.createElement("button");
+		buttonRegister.id = "register";
+		buttonRegister.innerText = "Register";
+		buttonRegister.onclick = register;
+
+
+		var form = document.createElement("form");
+		form.appendChild(textUsername);
+		form.appendChild(inputUsername);
+		form.appendChild(textPassword);
+		form.appendChild(inputPassword);
+		form.appendChild(buttonEnter);
+		form.appendChild(buttonRegister);
+
+		var loginForm = document.createElement("div");
+		loginForm.id = "login-form";
+		loginForm.appendChild(form);
+
+		return loginForm;
+	}
+
+	function enter () {
+		hideModal();
+		return false;
+	}
+
+	function register() {
+
 	}
 
 	function sendMessage() {
 		var message = textarea.value;
 		if(!message)
 			return;
+		//messageID?
 		//server?
 		drawMessage(message, true);
 		textarea.value = '';
@@ -98,6 +178,8 @@
 
 	document.getElementById("send-message-button").onclick = sendMessage;
 	document.body.onkeypress = function(event) {
+		if(modalIsShown) return;
+
 		if(event.keyCode == 13) {
 			if(sendOnEnter)
 				sendMessage();
@@ -120,13 +202,16 @@
 		}
 
 		var message = getMessage(event.target);
-		if(!message) return false;
+		if(!message) return;
 
 		message.classList.toggle('selected-message');
 		return false;
 	};
 
 //---------------------------------------------------------
+	
+	showModal(new LoginForm());
+
 	var messages = ["Hello :)", "Hello :)", "How are you?"];
 	var my = false;
 
