@@ -9,3 +9,13 @@
 	border-left: solid #D9E0E7 1px;
 	border-right: solid #D9E0E7 1px;
 }
+
+#delete-messages {
+	position: fixed;
+	top: 125px;
+	left: calc(50% + 475px);
+	/*width: 50px;*/
+	height: 30px;
+
+	background-color: red;
+}

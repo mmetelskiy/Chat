@@ -1,4 +1,4 @@
-<!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>
@@ -16,27 +16,33 @@
 	<link rel="stylesheet" type="text/css" href="./css/login-form.css">
 </head>
 <body>
-<div id="modal-container">
-	<div id="modal-frame">
-		<div id="carbon">
-			<div id="c12">12,011</div>
-			<div id="c6">6</div>
-			<div id="c2-4">2 -4</div>
-			<div id="c">C</div>
-			<div id="ul">-4<br>-3<br>-2<br>-1<br>+1<br>+2<br>+3<br>+4</div>
+	<div id="modal-container">
+		<div id="modal-frame">
+			<div id="carbon">
+				<div id="c12">12,011</div>
+				<div id="c6">6</div>
+				<div id="c2-4">2 -4</div>
+				<div id="c">C</div>
+				<div id="ul">-4<br>-3<br>-2<br>-1<br>+1<br>+2<br>+3<br>+4</div>
+			</div>
+			<div id="hat">hat</div>
+			<div id="form">
+
+			</div>
 		</div>
-		<div id="hat">hat</div>
-		<div id="form"></div>
 	</div>
-</div>
 
 	<div id="message-container"></div>
 	<div id="head">
 		<div id="icon"></div>
+
+		<div id="settings-button">Settings</div>
+
 	</div>
 	<div id="friends"></div>
-	<div id="server"></div>
+	<div id="server">соединение хорошее</div>
 	<div id="dialogs-head"></div>
+	<div id="delete-messages">Удалить выбранные(будет появляться при выделении</div>
 	<div id="bottom">
 		<div id="img"></div>
 		<textarea id="textarea" placeholder="Enter your message"></textarea>
@@ -44,14 +50,9 @@
 	</div>
 
 <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="./script/variables.js"></script>
+<script type="text/javascript" src="./script/LoginForm.js"></script>
 <script type="text/javascript">
-
-	var textarea = document.getElementById("textarea");
-	var messageContainer = document.getElementById("message-container");
-	var modalSkeletone = document.getElementById("modal-container");
-	var form = document.getElementById("form");
-	var sendOnEnter = false;
-	var modalIsShown = true;
 
 	function showModal(formToShow) {
 		modalIsShown = true;
@@ -64,59 +65,6 @@
 		while(form.firstChild)
 			form.removeChild(form.firstChild);
 		modalSkeletone.style.display = "none";
-	}
-
-/*
-<div id="login-form">
-	<form>
-		<span>Username:</span>
-		<input type="text" id="username">
-		<span>Password:</span>
-		<input type="password" id="password">
-		<button id="enter">Enter</button>
-		<button id="register">Register</button>
-	</form>
-</div>
-*/
-	function LoginForm() {
-		var textUsername = document.createElement("span");
-		textUsername.innerText = "Username:";
-
-		var inputUsername = document.createElement("input");
-		inputUsername.type = "text";
-		inputUsername.id = "username";
-
-		var textPassword = document.createElement("span");
-		textPassword.innerText = "Password";
-
-		var inputPassword = document.createElement("input");
-		inputPassword.type = "password";
-		inputPassword.id = "password";
-
-		var buttonEnter = document.createElement("button");
-		buttonEnter.id = "enter";
-		buttonEnter.innerText = "Enter";
-		buttonEnter.onclick = enter;
-
-		var buttonRegister = document.createElement("button");
-		buttonRegister.id = "register";
-		buttonRegister.innerText = "Register";
-		buttonRegister.onclick = register;
-
-
-		var form = document.createElement("form");
-		form.appendChild(textUsername);
-		form.appendChild(inputUsername);
-		form.appendChild(textPassword);
-		form.appendChild(inputPassword);
-		form.appendChild(buttonEnter);
-		form.appendChild(buttonRegister);
-
-		var loginForm = document.createElement("div");
-		loginForm.id = "login-form";
-		loginForm.appendChild(form);
-
-		return loginForm;
 	}
 
 	function enter () {
@@ -146,7 +94,7 @@
 	}
 
 	function addLineDividers(text) {
-		return text.replace( /^\s+|\s+$/g, '' ).replace(/\r?\n/g, '<br>');
+		return text.replace( /^\s+|\s+$/g, '' ).replace(/\r?\n+/g, '<br>');
 	}
 
 	function widthOfTextInElement(text, element) {
@@ -181,6 +129,37 @@
 		message.scrollIntoView();
 	}
 
+	function Settings() {
+/*<div id="settings">
+					<form>
+						<span>Username</span>
+						<input type="text">
+					</form>
+				</div>
+*/
+
+		var span = document.createElement("span");
+		span.innerText = "Username:";
+
+		var input = document.createElement("input");
+		input.type = "text";
+
+		var form = document.createElement("form");
+		form.appendChild(span);
+		form.appendChild(input);
+
+		var div = document.createElement("div");
+		div.appendChild(form);
+		div.id = "settings";
+
+		return div;
+}
+
+	function showSettings () {
+		showModal(new Settings());
+	}
+
+	document.getElementById("settings-button").onclick = showSettings;
 	document.getElementById("send-message-button").onclick = sendMessage;
 	document.body.onkeypress = function(event) {
 		if(modalIsShown) return;
@@ -188,12 +167,17 @@
 		if(event.keyCode == 13) {
 			if(sendOnEnter)
 				sendMessage();
-			else textarea.value += '\n';
+			else 
+			{
+				textarea.value = textarea.value.splice(0,textarea.selectionStart-1) + "\n" + textarea.value.splice(textarea.selectionStart);
+			}
 			return false;
 		}
 		else if(event.keyCode == 10) {
 			if(sendOnEnter)
-				textarea.value += '\n';
+			{
+				textarea.value = textarea.value.splice(0,textarea.selectionStart-1) + "\n" + textarea.value.splice(textarea.selectionStart);
+			}
 			else sendMessage();
 			return false;
 		}
@@ -214,8 +198,9 @@
 	};
 
 //---------------------------------------------------------
-	
+
 	showModal(new LoginForm());
+	// modalSkeletone.style.display = "inherit";
 
 	var messages = ["Hello :)", "Hello :)", "How are you?"];
 	var my = false;

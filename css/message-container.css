@@ -1,13 +1,14 @@
 #message-container {
-	margin-top: 125;
+	margin-top: 125px;
 	margin-left: calc(50% - 225px);
 	margin-bottom: 135px;
 	width: 700px;
 	overflow: hidden;
 
-	min-height: calc(100% - 247px);
-	border-left: solid #D9E0E7 1px;
-	border-right: solid #D9E0E7 1px;
+	/*min-height: 690px;calc(100% - 260px);*/
+
+/*	border-left: solid #D9E0E7 1px;
+	border-right: solid #D9E0E7 1px;*/
 	
 	-webkit-user-select: text;
 }

@@ -1,0 +1,18 @@
+#settings {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	padding: 40px;
+}
+
+#settings span {
+	color: white;
+}
+
+#settings input {
+	margin-bottom: 1em;
+	margin-top: .5em;
+}

@@ -1,8 +1,14 @@
-	div {
-		/*border: solid black 1px;*/
-	}
+div {
+	/*border: solid black 1px;*/
+}
 
-	body {
-		overflow-x: hidden;
-		-webkit-user-select: none;
-	}
+body {
+	overflow-x: hidden;
+	/*height: 1px;*/
+	/*padding-bottom: 135px;*/
+	-webkit-user-select: none;
+}
+
+html, body {
+	/*height: 100%;*/
+}
