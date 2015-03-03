@@ -1,5 +1,5 @@
 div {
-	/*border: solid black 1px;*/
+	border: solid black 1px;
 }
 
 body {
@@ -9,6 +9,6 @@ body {
 	-webkit-user-select: none;
 }
 
-html, body {
-	/*height: 100%;*/
+body:hover {
+	cursor: default;
 }

@@ -1,4 +1,4 @@
-#settings {
+#form > #settings {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -8,7 +8,7 @@
 	padding: 40px;
 }
 
-#settings span {
+#settings > form > span {
 	color: white;
 }
 

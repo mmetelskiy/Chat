@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/message-container.css">
 	<link rel="stylesheet" type="text/css" href="./css/modal-container.css">
 	<link rel="stylesheet" type="text/css" href="./css/login-form.css">
+	<link rel="stylesheet" type="text/css" href="./css/settings.css">
 </head>
 <body>
 	<div id="modal-container">
@@ -35,9 +36,7 @@
 	<div id="message-container"></div>
 	<div id="head">
 		<div id="icon"></div>
-
 		<div id="settings-button">Settings</div>
-
 	</div>
 	<div id="friends"></div>
 	<div id="server">соединение хорошее</div>
@@ -52,155 +51,19 @@
 <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="./script/variables.js"></script>
 <script type="text/javascript" src="./script/LoginForm.js"></script>
+<script type="text/javascript" src="./script/SettingsForm.js"></script>
+<script type="text/javascript" src="./script/DrawingElements.js"></script>
+<script type="text/javascript" src="./script/TextManipulations.js"></script>
+<script type="text/javascript" src="./script/ModalContainer.js"></script>
+<script type="text/javascript" src="./script/Requests.js"></script>
+<script type="text/javascript" src="./script/KeyListeners.js"></script>
+<script type="text/javascript" src="./script/MouseListeners.js"></script>
 <script type="text/javascript">
-
-	function showModal(formToShow) {
-		modalIsShown = true;
-		form.appendChild(formToShow);
-		modalSkeletone.style.display = "block";
-	}
-
-	function hideModal () {
-		modalIsShown = false;
-		while(form.firstChild)
-			form.removeChild(form.firstChild);
-		modalSkeletone.style.display = "none";
-	}
-
-	function enter () {
-		hideModal();
-		return false;
-	}
-
-	function register() {
-
-	}
-
-	function sendMessage() {
-		var message = textarea.value;
-		if(!message)
-			return;
-		//messageID?
-		//server?
-		drawMessage(message, true);
-		textarea.value = '';
-	}
-
-	function makeTextFitElement(text, element) {
-		// if(!element)
-		// 	element = document.body;
-		// if(widthOfTextInElement(text, element) < 551)
-			return addLineDividers(text);
-	}
-
-	function addLineDividers(text) {
-		return text.replace( /^\s+|\s+$/g, '' ).replace(/\r?\n+/g, '<br>');
-	}
-
-	function widthOfTextInElement(text, element) {
-		if(!element)
-			element = document.body;
-		var span = document.createElement("span");
-		span.style.display = "none";
-		span.innerHTML = text;
-		element.appendChild(span);
-		var width = $(span).width();
-		element.removeChild(span);
-		return width;
-	}
-
-	function drawMessage(textMessage, my) {
-		var message = document.createElement("div");
-		message.className = my ? "my-message" : "friend-message";
-
-		var textDiv = document.createElement("div");
-
-		var currentTime = new Date;
-		var sendingTime = currentTime.toLocaleTimeString() + "<br>" + currentTime.toLocaleDateString();
-
-		var time = document.createElement("time");
-		time.innerHTML = sendingTime;
-
-		message.appendChild(textDiv);
-		message.appendChild(time);
-
-		messageContainer.appendChild(message);
-		textDiv.innerHTML = makeTextFitElement(textMessage, textDiv);		
-		message.scrollIntoView();
-	}
-
-	function Settings() {
-/*<div id="settings">
-					<form>
-						<span>Username</span>
-						<input type="text">
-					</form>
-				</div>
-*/
-
-		var span = document.createElement("span");
-		span.innerText = "Username:";
-
-		var input = document.createElement("input");
-		input.type = "text";
-
-		var form = document.createElement("form");
-		form.appendChild(span);
-		form.appendChild(input);
-
-		var div = document.createElement("div");
-		div.appendChild(form);
-		div.id = "settings";
-
-		return div;
-}
-
-	function showSettings () {
-		showModal(new Settings());
-	}
-
-	document.getElementById("settings-button").onclick = showSettings;
-	document.getElementById("send-message-button").onclick = sendMessage;
-	document.body.onkeypress = function(event) {
-		if(modalIsShown) return;
-
-		if(event.keyCode == 13) {
-			if(sendOnEnter)
-				sendMessage();
-			else 
-			{
-				textarea.value = textarea.value.splice(0,textarea.selectionStart-1) + "\n" + textarea.value.splice(textarea.selectionStart);
-			}
-			return false;
-		}
-		else if(event.keyCode == 10) {
-			if(sendOnEnter)
-			{
-				textarea.value = textarea.value.splice(0,textarea.selectionStart-1) + "\n" + textarea.value.splice(textarea.selectionStart);
-			}
-			else sendMessage();
-			return false;
-		}
-
-		if(event.keyCode < 32) return;
-		textarea.focus();
-	};
-	messageContainer.onmousedown = function (event) {
-		function getMessage(target) {
-			return target.classList.contains("my-message") ? target : null;
-		}
-
-		var message = getMessage(event.target);
-		if(!message) return;
-
-		message.classList.toggle('selected-message');
-		return false;
-	};
 
 //---------------------------------------------------------
 
-	showModal(new LoginForm());
-	// modalSkeletone.style.display = "inherit";
+	// showModal(new LoginForm());
+	// showModal(new SettingsForm());
 
 	var messages = ["Hello :)", "Hello :)", "How are you?"];
 	var my = false;
