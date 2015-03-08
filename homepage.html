@@ -1,79 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>
-		Chat
-	</title>
+	<title>Chat</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="./css/style.css">
-	<link rel="stylesheet" type="text/css" href="./css/head.css">
-	<link rel="stylesheet" type="text/css" href="./css/friends.css">
-	<link rel="stylesheet" type="text/css" href="./css/server.css">
-	<link rel="stylesheet" type="text/css" href="./css/dialogs-head.css">
-	<link rel="stylesheet" type="text/css" href="./css/bottom.css">
-	<link rel="stylesheet" type="text/css" href="./css/message-container.css">
-	<link rel="stylesheet" type="text/css" href="./css/modal-container.css">
-	<link rel="stylesheet" type="text/css" href="./css/login-form.css">
-	<link rel="stylesheet" type="text/css" href="./css/settings.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div id="modal-container">
-		<div id="modal-frame">
-			<div id="carbon">
-				<div id="c12">12,011</div>
-				<div id="c6">6</div>
-				<div id="c2-4">2 -4</div>
-				<div id="c">C</div>
-				<div id="ul">-4<br>-3<br>-2<br>-1<br>+1<br>+2<br>+3<br>+4</div>
-			</div>
-			<div id="hat">hat</div>
-			<div id="form">
 
-			</div>
-		</div>
-	</div>
+<div id="username-hint" style="display:none;"></div>
+<div id="message-container"></div>
+<div id="messages">
+	<div style="clear: both;"></div>
+</div>
 
-	<div id="message-container"></div>
-	<div id="head">
-		<div id="icon"></div>
-		<div id="settings-button">Settings</div>
-	</div>
-	<div id="friends"></div>
-	<div id="server">соединение хорошее</div>
-	<div id="dialogs-head"></div>
-	<div id="delete-messages">Удалить выбранные(будет появляться при выделении</div>
-	<div id="bottom">
-		<div id="img"></div>
-		<textarea id="textarea" placeholder="Enter your message"></textarea>
-		<div id="send-message-button">Send</div>
-	</div>
+<div id="delete-button" style="display: none;"></div>
 
-<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="./script/variables.js"></script>
-<script type="text/javascript" src="./script/LoginForm.js"></script>
-<script type="text/javascript" src="./script/SettingsForm.js"></script>
-<script type="text/javascript" src="./script/DrawingElements.js"></script>
-<script type="text/javascript" src="./script/TextManipulations.js"></script>
-<script type="text/javascript" src="./script/ModalContainer.js"></script>
-<script type="text/javascript" src="./script/Requests.js"></script>
-<script type="text/javascript" src="./script/KeyListeners.js"></script>
-<script type="text/javascript" src="./script/MouseListeners.js"></script>
-<script type="text/javascript">
+<div id="head">
+	<div id="userdiv"></div>
+</div>
+<div id="bottom">
+	<div id="img"></div>
+	<textarea id="textarea" placeholder="Enter your message"></textarea>
+	<div id="send-message-button">Send</div>
+</div>
 
-//---------------------------------------------------------
-
-	showModal(new LoginForm());
-	// showModal(new SettingsForm());
-
-	var messages = ["Hello :)", "Hello :)", "How are you?"];
-	var my = false;
-
-	messages.forEach(function(message) {
-		drawMessage(message, my);
-		my = my ? false: true;
-	});
-
-</script>
-
+<script type="text/javascript" src="script/script.js"></script>
+<script type="text/javascript" src="script/SendMessage.js"></script>
+<script type="text/javascript" src="script/KeyListener.js"></script>
+<script type="text/javascript" src="script/Selection.js"></script>
+<script type="text/javascript" src="script/MouseListener.js"></script>
+<script type="text/javascript" src="script/Delete.js"></script>
+<script type="text/javascript" src="script/onload.js"></script>
+<script type="text/javascript" src="script/edit.js"></script>
+<script type="text/javascript" src="script/username.js"></script>
 </body>
 </html>
