@@ -37,6 +37,9 @@ div {
 	border-radius: 10px;
 	padding: 5px 20px 5px 20px;
 }
+#server:hover {
+	cursor: default;
+}
 
 /*------------center---------------*/
 #message-container {
