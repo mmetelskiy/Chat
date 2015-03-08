@@ -29,6 +29,15 @@ div {
 	cursor: pointer;
 }
 
+#server {
+	position: absolute;
+	right: 30px;
+	top: 20px;
+	background-color: white;
+	border-radius: 10px;
+	padding: 5px 20px 5px 20px;
+}
+
 /*------------center---------------*/
 #message-container {
 	position: fixed;
