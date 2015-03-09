@@ -4,10 +4,17 @@ function editMessage(message) {
 	var background = create('div');
 	background.className = 'modal-background';
 
+	var rect = message.getBoundingClientRect();
+
 	transformBottom(true, 
-					message.getBoundingClientRect().bottom + pageYOffset, 
+					rect.bottom + pageYOffset, 
 					message.getElementsByClassName('message-text')[0].innerText);
 
+
+	var editingWindow = create('div');
+
+	message.style.zIndex = 1001;
+	messages.onclick = null;
 	document.body.appendChild(background);
 
 
@@ -35,11 +42,14 @@ function editMessage(message) {
 			}
 		}
 		else {
-
+			
 			sendButton.innerText = 'Send';
 			bottom.style.position = 'fixed';
 			bottom.style.bottom = 0;
 			bottom.style.zIndex = 100;
+
+			message.style.zIndex = null;
+			messages.onclick = messagesClick;
 			sendButton.onclick = sendMessage;
 			document.body.removeChild(background);
 			textarea.value = '';

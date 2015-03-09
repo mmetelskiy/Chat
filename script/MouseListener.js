@@ -1,4 +1,6 @@
-messages.onclick = function(event) {
+messages.onclick = messagesClick;
+
+function messagesClick(event) {
 	
 	var target = event.target;
 	if(target.classList.contains('my-message')) {
