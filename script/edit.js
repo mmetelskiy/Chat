@@ -35,8 +35,10 @@ function editMessage(message) {
 
 				var text = textarea.value;
 				text = addLineDividers(text);
-				if(!text)
+				if(!text) {
 					return;
+				}
+				
 
 				saveEditing(message, text);
 			}
@@ -57,6 +59,18 @@ function editMessage(message) {
 	}
 
 	function saveEditing(message, text) {
+
+		//request...
+
+		//localStorage
+		var messages = getMessages();
+		var i = 0;
+		while(messages[i].id.toString() !== message.id.toString()) {
+			++i;
+		}
+		messages[i].text = text;
+		saveMessages(messages);
+		//------------
 
 		message.getElementsByClassName('message-text')[0].innerHTML = text;
 		transformBottom(false);

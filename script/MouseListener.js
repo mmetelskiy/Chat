@@ -45,5 +45,12 @@ deleteButton.onclick = function() {
 sendButton.onclick = sendMessage;
 
 get('userdiv').onclick = function() {
+	
 	showUsernameForm(true);
+}
+
+get('exit').onclick = function() {
+
+	clearMessageContainer();
+	showUsernameForm();
 }

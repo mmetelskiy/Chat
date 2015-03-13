@@ -30,12 +30,13 @@ function MessageNode(text, id, user, milliseconds, urlToImg) {
 	message.appendChild(mesText);
 	message.appendChild(mesTime);
 
-	if(user == username){
+	if(user == username) {
+
 		message.classList.add('my-message');
 
 		var editButton = create('div');
 		editButton.className = 'edit-button';
-	message.appendChild(editButton);
+		message.appendChild(editButton);
 	}
 	return message;
 }
@@ -43,14 +44,20 @@ function MessageNode(text, id, user, milliseconds, urlToImg) {
 function Message(user, text) {
 
 	function sendMessageOnServer(user, text) {
-		//temp
-		//must be request
+		
+		//request...
 		var message = {};
 		message.text = text;
 		message.time = +(new Date);
 		message.user = user;
 		message.id = message.time;
 		message.img = 'icon/profile.png';
+
+		//localStorage
+		var messages = getMessages();
+		messages.push(message);
+		saveMessages(messages);
+		//-----------------
 
 		return message;
 	}
@@ -60,8 +67,9 @@ function Message(user, text) {
 }
 
 function addLineDividers(text, fromHtml) {
-	if(fromHtml)
+	if(fromHtml) {
 		return text.replace( /<br>+/g, '\n');
+	}
 
 	return text.replace( /^\s+|\s+$/g, '' ).replace(/\r?\n+/g, '<br>');
 }
@@ -70,8 +78,9 @@ function sendMessage() {
 
 	var text = textarea.value;
 	text = addLineDividers(text);
-	if(!text)
+	if(!text) {
 		return;
+	}
 
 	var message = new Message(username, text);
 

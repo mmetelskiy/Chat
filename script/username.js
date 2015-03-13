@@ -48,8 +48,9 @@ function showUsernameForm(isChanging) {
 		button.onclick = function() {
 
 			var text = input.value;
-			if(!text)
+			if(!text) {
 				return;
+			}
 
 			enter(text);
 		}
@@ -67,10 +68,22 @@ function showUsernameForm(isChanging) {
 
 	function changeUsername(user) {
 		
+		//localStorage
+		var messages = getMessages();
+		messages.forEach(function(message) {
+
+			if(message.user === username) {
+				message.user = user;
+			}
+		});
+		saveMessages(messages);
+		//------------------
+
+
 		setUsername(user);
 		//request...
 
-		//temp
+		//temp???
 		var myMessages = document.body.querySelectorAll('.my-message .message-img');
 		myMessages.forEach = [].forEach;
 		myMessages.forEach(function(message) {
