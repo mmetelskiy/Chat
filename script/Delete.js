@@ -21,15 +21,13 @@ function deleteFromServer(selectedIds) {
 
 
 	//localStorage
-	var messages = getMessages();
+	for(var i = 0; i < allMessages.length; i++) {
 
-	for(var i = 0; i < messages.length; i++) {
+		if(~selectedIds.indexOf(allMessages[i].id.toString())) {
 
-		if(~selectedIds.indexOf(messages[i].id.toString())) {
-
-			messages.splice(i--, 1);
+			allMessages.splice(i--, 1);
 		}
 	}
-	saveMessages(messages);
+	saveMessages();
 	//-----------------
 }

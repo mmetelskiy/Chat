@@ -54,9 +54,8 @@ function Message(user, text) {
 		message.img = 'icon/profile.png';
 
 		//localStorage
-		var messages = getMessages();
-		messages.push(message);
-		saveMessages(messages);
+		allMessages.push(message);
+		saveMessages();
 		//-----------------
 
 		return message;

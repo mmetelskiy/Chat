@@ -5,8 +5,8 @@ document.body.onload = function() {
 
 function showMessages() {
 
-	var messages = getMessages();
-	messages.forEach(function(message) {
+	getMessages();
+	allMessages.forEach(function(message) {
 		drawMessage(message);
 	});
 }
@@ -37,16 +37,14 @@ function getMessages() {
 	// 		];
 
 //localStorage
-	var messages = JSON.parse(localStorage.getItem("messages"));
-	if(!messages)
-		messages = [];
+	allMessages = JSON.parse(localStorage.getItem("messages"));
+	if(!allMessages)
+		allMessages = [];
 //----------------
-
-	return messages;
 }
-function saveMessages(messages) {
+function saveMessages() {
 
-	localStorage.setItem('messages', JSON.stringify(messages));
+	localStorage.setItem('messages', JSON.stringify(allMessages));
 }
 
 function getAvatar() {

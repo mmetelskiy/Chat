@@ -63,13 +63,12 @@ function editMessage(message) {
 		//request...
 
 		//localStorage
-		var messages = getMessages();
 		var i = 0;
-		while(messages[i].id.toString() !== message.id.toString()) {
+		while(allMessages[i].id.toString() !== message.id.toString()) {
 			++i;
 		}
-		messages[i].text = text;
-		saveMessages(messages);
+		allMessages[i].text = text;
+		saveMessages();
 		//------------
 
 		message.getElementsByClassName('message-text')[0].innerHTML = text;

@@ -16,3 +16,5 @@ var emptyDiv = messages.lastElementChild;
 var deleteButton = get('delete-button');
 
 var hint = get('username-hint');
+
+var allMessages = [];

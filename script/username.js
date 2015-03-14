@@ -41,6 +41,8 @@ function showUsernameForm(isChanging) {
 				return;
 
 			changeUsername(text);
+			document.body.removeChild(background);
+			textarea.focus();
 		}
 	}
 	else {
@@ -53,6 +55,8 @@ function showUsernameForm(isChanging) {
 			}
 
 			enter(text);
+			document.body.removeChild(background);
+			textarea.focus();
 		}
 	}
 
@@ -60,23 +64,34 @@ function showUsernameForm(isChanging) {
 		
 		setUsername(user);
 		showMessages();
-		document.body.removeChild(background);
-		textarea.focus();
 
 		get('bottom').firstElementChild.style.backgroundImage = 'url(' + getAvatar() + ')';
 	}
 
 	function changeUsername(user) {
-		
-		//localStorage
-		var messages = getMessages();
-		messages.forEach(function(message) {
+
+		if(username === user) {
+			setUsername(username);
+			return;
+		}
+
+		for(var i = 0; i < allMessages.length; ++i) {
+
+			if(allMessages[i].user === user) {
+				setUsername(username);
+				return;
+			}
+		}
+
+		allMessages.forEach(function(message) {
 
 			if(message.user === username) {
 				message.user = user;
 			}
 		});
-		saveMessages(messages);
+
+		//localStorage
+		saveMessages();
 		//------------------
 
 
@@ -90,9 +105,5 @@ function showUsernameForm(isChanging) {
 
 			message.setAttribute('username', user);
 		});
-
-		document.body.removeChild(background);
-
-		textarea.focus();
 	}
 }
