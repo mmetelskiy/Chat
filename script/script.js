@@ -25,10 +25,10 @@ var hint = get('username-hint');
 
 var users = {};
 var messageToken;
-var editToken;
-var deleteToken;
-// var userToken;
-// var userEditToken;
+var messageEditToken;
+var messageDeleteToken;
+var userToken;
+var userChangeToken;
 
 var host = "http://localhost";
 var port = ":2222";

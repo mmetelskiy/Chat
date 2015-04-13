@@ -50,6 +50,7 @@ get('userdiv').onclick = function() {
 
 get('exit').onclick = function() {
 
+	stopGettingMessages();
 	clearMessageContainer();
 	showUsernameForm();
 }

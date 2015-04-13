@@ -12,9 +12,18 @@ function startGettingMessages() {
 	}, 1000);
 }
 
+function stopGettingMessages() {
+
+	clearTimeout(timer);
+}
+
 function doGet() {
 
-	var params = '?messageToken=' + messageToken;	//...
+	var params = 	'?messageToken=' + messageToken + 
+					'&messageEditToken=' + messageEditToken + 
+					'&messageDeleteToken=' + messageDeleteToken +
+					'&userToken=' + userToken +
+					'&userChangeToken=' + userChangeToken;
 
 	alert('GET:\n' + params);
 
