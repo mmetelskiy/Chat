@@ -1,19 +1,17 @@
 function setUsername(user) {
 	
-	username = user;
 	get('userdiv').innerText = username;
 	get('userdiv').style.display = '';
 }
 
-function showUsernameForm(isChanging) {
+function Background() {
 
-	get('userdiv').style.display = 'none';
+	return create('div', 'modal-background');
+}
 
-	var background = create('div');
-	background.className = 'modal-background';
+function UsernameForm() {
 
-	var enterContainer = create('div');
-	enterContainer.className = 'entering';
+	var container = create('div', 'entering');
 
 	var p = create('p');
 	p.innerText = 'Username:';
@@ -23,87 +21,119 @@ function showUsernameForm(isChanging) {
 	var button = create('button');
 	button.innerText = 'Enter';
 
-	enterContainer.appendChild(p);
-	enterContainer.appendChild(input);
-	enterContainer.appendChild(button);
+	container.appendChild(p);
+	container.appendChild(input);
+	container.appendChild(button);
 
-	background.appendChild(enterContainer);
+	return {
+		"container":container,
+		"input":input,
+		"button":button
+	};
+}
+
+function showUsernameForm(isChanging) {
+
+	get('userdiv').style.display = 'none';
+
+	var background = new Background();
+	var usernameForm = new UsernameForm();
+
+	background.appendChild(usernameForm.container);
 	document.body.appendChild(background);
 
-	input.focus();
+	usernameForm.input.focus();
 
 	if(isChanging) {
 
-		input.value = username;
-		button.onclick = function() {
-			var text = input.value;
-			if(!text)
+		usernameForm.button.onclick = function() {
+
+			var text = usernameForm.input.value;
+			if(!text) {
 				return;
+			}
 
 			changeUsername(text);
-			document.body.removeChild(background);
-			textarea.focus();
 		}
 	}
 	else {
 
-		button.onclick = function() {
+		usernameForm.button.onclick = function() {
 
-			var text = input.value;
+			var text = usernameForm.input.value;
 			if(!text) {
 				return;
 			}
 
 			enter(text);
-			document.body.removeChild(background);
-			textarea.focus();
 		}
 	}
 
-	function enter(user) {
-		
-		setUsername(user);
-		showMessages();
+	function enter(username) {
 
-		get('bottom').firstElementChild.style.backgroundImage = 'url(' + getAvatar() + ')';
+		var params = '?username=' + username;
+
+		alert('GET:\n' + params);
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', host + port + adr + params, true);
+
+		xhr.send();
+
+		xhr.onreadystatechange = function() {
+
+			if(xhr.status == 200) {
+
+				showServerState(true);
+
+				if(xhr.readyState == 4) {
+
+					var resp = xhr.responseBody;
+					usernameId = resp.currentUserId;
+
+					//tokens???
+
+					document.body.removeChild(background);
+					textarea.focus();
+					startGettingMessages();
+				}
+			}
+			else {
+				showServerState(false);
+			}
+		}
 	}
 
-	function changeUsername(user) {
 
-		if(username === user) {
-			setUsername(username);
-			return;
-		}
+	function changeUsername(username) {
 
-		for(var i = 0; i < allMessages.length; ++i) {
+		var requestBody = {};
+		requestBody.user = {};
+		requestBody.user.userId = usernameId;
+		requestBody.user.username = username;
 
-			if(allMessages[i].user === user) {
-				setUsername(username);
-				return;
+		alert('PUT-request:\n' + JSON.stringify(requestBody))
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('PUT', host + port + adr, true);
+
+		xhr.send(JSON.stringify(requestBody));
+
+		xhr.onreadystatechange = function() {
+
+			if(xhr.status == 200) {
+
+				showServerState(true);
+
+				if(xhr.readyState == 4) {
+
+					document.body.removeChild(background);
+					textarea.focus();
+				}
+			}
+			else {
+				showServerState(false);
 			}
 		}
-
-		allMessages.forEach(function(message) {
-
-			if(message.user === username) {
-				message.user = user;
-			}
-		});
-
-		//localStorage
-		saveMessages();
-		//------------------
-
-
-		setUsername(user);
-		//request...
-
-		//temp???
-		var myMessages = document.body.querySelectorAll('.my-message .message-img');
-		myMessages.forEach = [].forEach;
-		myMessages.forEach(function(message) {
-
-			message.setAttribute('username', user);
-		});
 	}
 }

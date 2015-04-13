@@ -1,68 +1,44 @@
-function MessageNode(text, id, user, milliseconds, urlToImg) {
+function MessageNode(message) {
 /*
-<div class="message">
-	<div class="message-img" username="User"></div>
+<div class="message" id=123>
+	<div class="message-img" usernameId="Id"></div>
 	<div class="message-text"></div>
 	<time></time>
 
 	<div class="edit-button"></div>
 </div>
 */
-	
-	var mesImg = create('div');
-	mesImg.className = 'message-img';
-	mesImg.setAttribute('username', user);
-	mesImg.style.backgroundImage = 'url(' + urlToImg + ')'
+	var img = create('div', 'message-img');
+	img.setAttribute('isernameId', message.userId);
+	img.style.backgroundImage = 'url(' + users[message.userId].userImage + ')';
 
-	var mesText = create('div');
-	mesText.className = 'message-text';
-	mesText.innerHTML = text;
+	var text = create('div', 'message-text');
+	text.innerHTML = message.messageText;
 
-	var mesTime = create('time');
-	var date = new Date(+milliseconds);
-	mesTime.innerHTML = date.toLocaleTimeString() + "<br>" + date.toLocaleDateString();
+	var time = create('time');
+	var date = new Date(+message.messageTime);
+	time.innerHTML = date.toLocaleTimeString() + "<br>" + date.toLocaleDateString();
 
-	var message = create('div');
-	message.className = 'message';
-	message.id = id;
+	var msgNode = create('div', 'message');
+	msgNode.id = message.messageId;
 
-	message.appendChild(mesImg);
-	message.appendChild(mesText);
-	message.appendChild(mesTime);
+	msgNode.appendChild(img);
+	msgNode.appendChild(text);
+	msgNode.appendChild(time);
 
-	if(user == username) {
+	if(usernameId == message.userId && !message.isDeleted) {
 
-		message.classList.add('my-message');
+		msgNode.classList.add('my-message');
 
-		var editButton = create('div');
-		editButton.className = 'edit-button';
-		message.appendChild(editButton);
+		var editButton = create('div', 'edit-button');
+		msgNode.appendChild(editButton);
 	}
-	return message;
-}
+	else if(message.isDeleted) {
 
-function Message(user, text) {
-
-	function sendMessageOnServer(user, text) {
-		
-		//request...
-		var message = {};
-		message.text = text;
-		message.time = +(new Date);
-		message.user = user;
-		message.id = message.time;
-		message.img = 'icon/profile.png';
-
-		//localStorage
-		allMessages.push(message);
-		saveMessages();
-		//-----------------
-
-		return message;
+		// msgNode.classList.add('deleted');
 	}
 
-	var message = sendMessageOnServer(user, text);
-	return message;
+	return msgNode;
 }
 
 function addLineDividers(text, fromHtml) {
@@ -75,26 +51,43 @@ function addLineDividers(text, fromHtml) {
 
 function sendMessage() {
 
+	function MessageToPost(text) {
+		
+		return {
+			"userId":usernameId,
+			"messageText":text
+		};
+	}
+
 	var text = textarea.value;
 	text = addLineDividers(text);
+
 	if(!text) {
 		return;
 	}
 
-	var message = new Message(username, text);
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', host + port + adr, true);
 
-	drawMessage(message);
-}
+	var body = JSON.stringify(new MessageToPost(text));
 
-function drawMessage(message) {
-	
-	var messageNode = new MessageNode(	message['text'],
-										message['id'],
-										message['user'],
-										message['time'],
-										message['img']);
+	alert('POST:\n' + body);
 
-	messages.insertBefore(messageNode, emptyDiv);
-	messageNode.scrollIntoView();
-	textarea.value = '';
+	xhr.send(body);
+
+	xhr.onreadystatechange = function() {
+
+		if(xhr.status == 200) {
+
+			showServerState(true);
+
+			if(xhr.readyState == 4) {
+
+				textarea.value = '';
+			}
+		}
+		else {
+			showServerState(false);
+		}
+	}
 }

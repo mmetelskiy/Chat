@@ -1,19 +1,15 @@
-function editMessage(message) {
+function editMessage(messageNode) {
 
 	var bottom = get('bottom');
-	var background = create('div');
-	background.className = 'modal-background';
+	var background = new Background();
 
-	var rect = message.getBoundingClientRect();
+	var rect = messageNode.getBoundingClientRect();
 
 	transformBottom(true, 
 					rect.bottom + pageYOffset, 
-					message.getElementsByClassName('message-text')[0].innerText);
+					messageNode.getElementsByClassName('message-text')[0].innerText);
 
-
-	var editingWindow = create('div');
-
-	message.style.zIndex = 1001;
+	messageNode.style.zIndex = 1001;
 	messages.onclick = null;
 	document.body.appendChild(background);
 
@@ -39,8 +35,7 @@ function editMessage(message) {
 					return;
 				}
 				
-
-				saveEditing(message, text);
+				putEditing(messageNode.id, text);
 			}
 		}
 		else {
@@ -50,7 +45,7 @@ function editMessage(message) {
 			bottom.style.bottom = 0;
 			bottom.style.zIndex = 100;
 
-			message.style.zIndex = null;
+			messageNode.style.zIndex = null;
 			messages.onclick = messagesClick;
 			sendButton.onclick = sendMessage;
 			document.body.removeChild(background);
@@ -58,20 +53,37 @@ function editMessage(message) {
 		}
 	}
 
-	function saveEditing(message, text) {
+	function putEditing(messageId, text) {
 
-		//request...
+		var xhr = new XMLHttpRequest();
+		xhr.open('PUT', host + port + adr, true);
 
-		//localStorage
-		var i = 0;
-		while(allMessages[i].id.toString() !== message.id.toString()) {
-			++i;
+		var body = {
+			"message": {
+				"messageId":messageId,
+				"messageText":text
+			}
+		};
+
+		alert('PUT:\n' + body);
+
+		xhr.send(JSON.stringify(body));
+
+		xhr.onreadystatechange = function() {
+
+			if(xhr.status == 200) {
+
+				showServerState(true);
+
+				if(xhr.readyState == 4) {
+
+					transformBottom(false);
+				}
+			}
+			else {
+				
+				showServerState(false);
+			}
 		}
-		allMessages[i].text = text;
-		saveMessages();
-		//------------
-
-		message.getElementsByClassName('message-text')[0].innerHTML = text;
-		transformBottom(false);
 	}
 }

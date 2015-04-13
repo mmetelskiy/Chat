@@ -2,12 +2,12 @@ function toggleSelection(message) {
 
 	if(!message.classList.contains('selected-message')) {
 
-		selectedMessages.push(message);
+		selectedMessages.push(message.id);
 		message.classList.add('selected-message');
 	}
 	else {
 
-		selectedMessages.splice(selectedMessages.indexOf(message), 1);
+		selectedMessages.splice(selectedMessages.indexOf(message.id), 1);
 		message.classList.remove('selected-message');
 	}
 	checkDeleteButtonState();

@@ -23,8 +23,8 @@ document.body.onmousemove = function(event) {
 		return;
 	}
 
-	var text = target.getAttribute('username');
-	hint.innerText = text;
+	var userId = target.getAttribute('usernameId');
+	hint.innerText = users[userId];
 	hint.style.right = 'calc(100% - ' + event.pageX + 'px + 2px)';
 	hint.style.top = 'calc(' + event.pageY + 'px - 1em - 10px)';
 	hint.style.display = '';
@@ -39,7 +39,6 @@ deleteButton.onmouseout = function() {
 deleteButton.onclick = function() {
 
 	deleteSelected();
-	checkDeleteButtonState();
 }
 
 sendButton.onclick = sendMessage;

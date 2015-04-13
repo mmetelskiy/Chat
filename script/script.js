@@ -1,11 +1,17 @@
 function get(id) {
 	return document.getElementById(id);
 }
-function create(element) {
-	return document.createElement(element);
+function create(element, className) {
+
+	var el = document.createElement(element);
+	if(className) {
+		
+		el.className = className;	
+	}
+	return el;
 }
 
-var username = '';
+var usernameId = '';
 var selectedMessages = [];
 
 var textarea = get('textarea');
@@ -17,4 +23,13 @@ var deleteButton = get('delete-button');
 
 var hint = get('username-hint');
 
-var allMessages = [];
+var users = {};
+var messageToken;
+var editToken;
+var deleteToken;
+// var userToken;
+// var userEditToken;
+
+var host = "http://localhost";
+var port = ":2222";
+var adr = "/Chat";

@@ -3,53 +3,114 @@ document.body.onload = function() {
 	showUsernameForm();
 }
 
-function showMessages() {
+function startGettingMessages() {
 
-	getMessages();
-	allMessages.forEach(function(message) {
-		drawMessage(message);
-	});
+	timer = setTimeout(function func() {
+
+		doGet();
+		timer = setTimeout(func, 1000);
+	}, 1000);
 }
 
-function getMessages() {
+function doGet() {
+
+	var params = '?messageToken=' + messageToken;	//...
+
+	alert('GET:\n' + params);
+
+	var xhr = new XMLHttpRequest();
+
+	xhr.open('GET', host + port + adr + params, true);
+
+	xhr.send();
+
+	xhr.onreadystatechange = function() {
+
+		if(xhr.status == 200) {
+
+			showServerState(true);
+
+			if(xhr.readyState == 4) {
+
+				var resp = xhr.responseBody;
+
+				if(resp.messageToken) {
+
+					resp.messages.forEach(function(message) {
+
+						drawMessage(message);
+					});
+				}
+
+				if(resp.messageEditToken) {
+
+					resp.editedMessages.forEach(function(editing) {
+
+						setMessageText(editing.messageId, editing.messageText);
+					});
+				}
+
+				if(resp.messageDeleteToken) {
+
+					resp.deletedMessagesIds.forEach(function(id) {
+
+						makeMessageDeleted(id);
+					});
+				}
+
+				if(resp.userToken) {
+
+					resp.users.forEach(function(user) {
+
+						users[user.userId] = {
+							"username":user.username,
+							"userImage":user.userImage
+						};
+					});
+				}
+
+				if(resp.userChangeToken) {
+
+					resp.changedUsers.forEach(function(user) {
+
+						users[user.userId] = {
+
+							"username":user.username,
+							"userImage":user.userImage
+						};
+
+						if(usernameId == user.userId) {
+
+							if(user.username) {
+
+								setUsername(user.username);
+							}
+							if(user.userImage) {
+
+								
+							}
+						}
+					})
+				}
+			}
+		}
+		else {
+			showServerState(false);
+		}
+	}
+}
+
+function setMessageText(messageId, text) {
+
+	get(messageId).getElementsByClassName('message-text')[0].innerHTML = text;
+}
+
+function drawMessage(message) {
 	
-	//request...
+	var messageNode = new MessageNode(message);
 
-
-	// var messages = [
-	// 			{	"text": "Hello",
-	// 				"id": "12345678",
-	// 				"user": "Pasha",
-	// 				"img": "icon/profile.png",
-	// 				"time": "436278913" },
-
-	// 			{	"text": "Hello",
-	// 				"id": "784932789",
-	// 				"user": "Dima",
-	// 				"img": "icon/profile.png",
-	// 				"time": "9874738923" },
-
-	// 			{	"text": "How do you do?",
-	// 				"id": "578902754",
-	// 				"user": "Pasha",
-	// 				"img": "icon/profile.png",
-	// 				"time": "4673821923" }
-	// 		];
-
-//localStorage
-	allMessages = JSON.parse(localStorage.getItem("messages"));
-	if(!allMessages)
-		allMessages = [];
-//----------------
-}
-function saveMessages() {
-
-	localStorage.setItem('messages', JSON.stringify(allMessages));
-}
-
-function getAvatar() {
-
-	return 'icon/profile.png';
+	messages.insertBefore(messageNode, emptyDiv);
+	messageNode.scrollIntoView();
 }
 
 function clearMessageContainer() {

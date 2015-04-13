@@ -1,33 +1,28 @@
 function deleteSelected() {
 
-	var selectedIds = [];
-	selectedMessages.forEach(function(messageNode) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('DELETE', host + port + adr, true);
 
-		selectedIds.push(messageNode.id.toString());
-	});
+	xhr.send(JSON.stringify(selectedMessages));
 
-	deleteFromServer(selectedIds);
+	xhr.onreadystatechange = function() {
 
-	//probably, temporary operation...
-	while(selectedMessages.length) {
-		var message = selectedMessages.pop();
-		messages.removeChild(message);
+		if(xhr.status == 200) {
+
+			showServerState(true);
+
+			if(xhr.readyState == 4) {
+
+				selectedMessages = [];
+			}
+		}
+		else {
+			showServerState(false);
+		}
 	}
 }
 
-function deleteFromServer(selectedIds) {
+function makeMessageDeleted(messageId) {
+	
 
-	//request...
-
-
-	//localStorage
-	for(var i = 0; i < allMessages.length; i++) {
-
-		if(~selectedIds.indexOf(allMessages[i].id.toString())) {
-
-			allMessages.splice(i--, 1);
-		}
-	}
-	saveMessages();
-	//-----------------
 }
