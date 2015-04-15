@@ -164,6 +164,20 @@ div {
 	opacity: 1;
 }
 
+/*---------deleted message-----------*/
+
+.deleted-message {
+	border: 0;
+	padding: 0;
+	background: #FFFFFF;
+}
+
+.deleted-message > .message-text {
+	margin-top: 10px;
+	min-width: 0;
+	font-style: italic;
+}
+
 /*---------delete button-------------*/
 #delete-button {
 	position: fixed;

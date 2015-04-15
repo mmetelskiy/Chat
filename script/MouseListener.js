@@ -1,22 +1,18 @@
 messages.onclick = messagesClick;
 
 function messagesClick(event) {
-	
 	var target = event.target;
-	if(target.classList.contains('my-message')) {
-
-		var message = target;
-		toggleSelection(message);
+	if(target.classList.contains('my-message') && !isDeleted(target)) {
+		var messageNode = target;
+		toggleSelection(messageNode);
 	}
 	else if(target.classList.contains('edit-button')) {
-
 		editMessage(target.parentNode);
 	}
 	return false;
 }
 
 document.body.onmousemove = function(event) {
-
 	var target = event.target;
 	if(!target.classList.contains('message-img')) {
 		hint.style.display = 'none';
@@ -37,19 +33,16 @@ deleteButton.onmouseout = function() {
 	this.style.opacity = '.3';
 }
 deleteButton.onclick = function() {
-
 	deleteSelected();
 }
 
 sendButton.onclick = sendMessage;
 
 get('userdiv').onclick = function() {
-	
 	showUsernameForm(true);
 }
 
 get('exit').onclick = function() {
-
 	stopGettingMessages();
 	clearMessageContainer();
 	showUsernameForm();

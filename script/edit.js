@@ -1,5 +1,4 @@
 function editMessage(messageNode) {
-
 	var bottom = get('bottom');
 	var background = new Background();
 
@@ -15,9 +14,7 @@ function editMessage(messageNode) {
 
 
 	function transformBottom(startEditing, bottomPosition, text) {
-
 		if(startEditing) {
-
 			sendButton.innerText = 'save';
 			bottomPosition += 135;
 			bottom.style.position = 'absolute';
@@ -28,7 +25,6 @@ function editMessage(messageNode) {
 			textarea.focus();
 
 			sendButton.onclick = function() {
-
 				var text = textarea.value;
 				text = addLineDividers(text);
 				if(!text) {
@@ -39,7 +35,6 @@ function editMessage(messageNode) {
 			}
 		}
 		else {
-			
 			sendButton.innerText = 'Send';
 			bottom.style.position = 'fixed';
 			bottom.style.bottom = 0;
@@ -54,34 +49,27 @@ function editMessage(messageNode) {
 	}
 
 	function putEditing(messageId, text) {
+		var body = {
+				"message": {
+					"messageId":messageId,
+					"messageText":text
+				}
+		};
+		alert('PUT:\n' + body);
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('PUT', host + port + adr, true);
-
-		var body = {
-			"message": {
-				"messageId":messageId,
-				"messageText":text
-			}
-		};
-
-		alert('PUT:\n' + body);
-
 		xhr.send(JSON.stringify(body));
-
 		xhr.onreadystatechange = function() {
 
 			if(xhr.status == 200) {
-
 				showServerState(true);
 
 				if(xhr.readyState == 4) {
-
 					transformBottom(false);
 				}
 			}
 			else {
-				
 				showServerState(false);
 			}
 		}

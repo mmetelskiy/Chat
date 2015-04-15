@@ -1,16 +1,13 @@
 function setUsername(user) {
-	
 	get('userdiv').innerText = username;
 	get('userdiv').style.display = '';
 }
 
 function Background() {
-
 	return create('div', 'modal-background');
 }
 
 function UsernameForm() {
-
 	var container = create('div', 'entering');
 
 	var p = create('p');
@@ -33,7 +30,6 @@ function UsernameForm() {
 }
 
 function showUsernameForm(isChanging) {
-
 	get('userdiv').style.display = 'none';
 
 	var background = new Background();
@@ -45,9 +41,7 @@ function showUsernameForm(isChanging) {
 	usernameForm.input.focus();
 
 	if(isChanging) {
-
 		usernameForm.button.onclick = function() {
-
 			var text = usernameForm.input.value;
 			if(!text) {
 				return;
@@ -57,9 +51,7 @@ function showUsernameForm(isChanging) {
 		}
 	}
 	else {
-
 		usernameForm.button.onclick = function() {
-
 			var text = usernameForm.input.value;
 			if(!text) {
 				return;
@@ -70,28 +62,27 @@ function showUsernameForm(isChanging) {
 	}
 
 	function enter(username) {
-
 		var params = '?username=' + username;
 
 		alert('GET:\n' + params);
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', host + port + adr + params, true);
-
 		xhr.send();
-
 		xhr.onreadystatechange = function() {
-
 			if(xhr.status == 200) {
-
 				showServerState(true);
 
 				if(xhr.readyState == 4) {
-
 					var resp = xhr.responseBody;
 					usernameId = resp.currentUserId;
 
-					//tokens???
+					messageToken = resp.messageToken;
+					messageEditToken = resp.messageEditToken;
+					messageDeleteToken = resp.messageDeleteToken;
+
+					userToken = resp.userToken;
+					userChangeToken = resp.userChangeToken;
 
 					document.body.removeChild(background);
 					textarea.focus();
@@ -106,7 +97,6 @@ function showUsernameForm(isChanging) {
 
 
 	function changeUsername(username) {
-
 		var requestBody = {};
 		requestBody.user = {};
 		requestBody.user.userId = usernameId;
@@ -116,17 +106,12 @@ function showUsernameForm(isChanging) {
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('PUT', host + port + adr, true);
-
 		xhr.send(JSON.stringify(requestBody));
-
 		xhr.onreadystatechange = function() {
-
 			if(xhr.status == 200) {
-
 				showServerState(true);
 
 				if(xhr.readyState == 4) {
-
 					document.body.removeChild(background);
 					textarea.focus();
 				}

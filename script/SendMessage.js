@@ -13,7 +13,13 @@ function MessageNode(message) {
 	img.style.backgroundImage = 'url(' + users[message.userId].userImage + ')';
 
 	var text = create('div', 'message-text');
-	text.innerHTML = message.messageText;
+	if(message.isDeleted) {
+		msgNode.classList.add('deleted-message');
+		text.innerText = 'Message was deleted';
+	}
+	else {
+		text.innerHTML = message.messageText;
+	}
 
 	var time = create('time');
 	var date = new Date(+message.messageTime);
@@ -26,16 +32,13 @@ function MessageNode(message) {
 	msgNode.appendChild(text);
 	msgNode.appendChild(time);
 
-	if(usernameId == message.userId && !message.isDeleted) {
-
+	if(usernameId == message.userId) {
 		msgNode.classList.add('my-message');
 
-		var editButton = create('div', 'edit-button');
-		msgNode.appendChild(editButton);
-	}
-	else if(message.isDeleted) {
-
-		// msgNode.classList.add('deleted');
+		if(!message.isDeleted) {
+			var editButton = create('div', 'edit-button');
+			msgNode.appendChild(editButton);
+		}
 	}
 
 	return msgNode;
@@ -45,14 +48,11 @@ function addLineDividers(text, fromHtml) {
 	if(fromHtml) {
 		return text.replace( /<br>+/g, '\n');
 	}
-
 	return text.replace( /^\s+|\s+$/g, '' ).replace(/\r?\n+/g, '<br>');
 }
 
 function sendMessage() {
-
 	function MessageToPost(text) {
-		
 		return {
 			"userId":usernameId,
 			"messageText":text
@@ -66,23 +66,17 @@ function sendMessage() {
 		return;
 	}
 
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', host + port + adr, true);
-
 	var body = JSON.stringify(new MessageToPost(text));
-
 	alert('POST:\n' + body);
 
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', host + port + adr, true);
 	xhr.send(body);
-
 	xhr.onreadystatechange = function() {
-
 		if(xhr.status == 200) {
-
 			showServerState(true);
 
 			if(xhr.readyState == 4) {
-
 				textarea.value = '';
 			}
 		}

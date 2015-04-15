@@ -2,10 +2,8 @@ function get(id) {
 	return document.getElementById(id);
 }
 function create(element, className) {
-
 	var el = document.createElement(element);
 	if(className) {
-		
 		el.className = className;	
 	}
 	return el;
